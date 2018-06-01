@@ -1,6 +1,5 @@
 package com.culturer.shop.pages.home;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,8 +33,12 @@ public class HomeFragment extends Fragment {
 	private Banner banner;
 	private CustomGridView hfh_gridview;
 	private AutoScrollTextView textview_auto_roll;
+	private CustomGridView grid_tese;
+	private CustomGridView grid_tejia;
 	
-	private List<String> pictureList = new ArrayList<>();
+	private List<Integer> pictureList = new ArrayList<>();
+	TeSeAdapter adapter_tese ;
+	TeJiaAdapter adapter_tejia;
 	
 	public HomeFragment() {
 		// Required empty public constructor
@@ -47,8 +50,7 @@ public class HomeFragment extends Fragment {
 	}
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		headerView =  inflater.inflate(R.layout.home_frament_header, null, false);
 		contentView = inflater.inflate(R.layout.fragment_home, container, false);
 		init();
@@ -61,9 +63,10 @@ public class HomeFragment extends Fragment {
 	}
 	
 	private void initData(){
-		pictureList.add("http://img2.imgtn.bdimg.com/it/u=3588772980,2454248748&fm=27&gp=0.jpg");
-		pictureList.add("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg");
-		pictureList.add("http://img.zcool.cn/community/01058a556895750000012716d39e4e.jpg@3000w_1l_2o_100sh.jpg");
+		pictureList.add(R.mipmap.pic_main1);
+		pictureList.add(R.mipmap.pic_main2);
+		pictureList.add(R.mipmap.pic_main3);
+		pictureList.add(R.mipmap.pic_main4);
 	}
 
 	private void initView(){
@@ -73,9 +76,12 @@ public class HomeFragment extends Fragment {
 		initGridView();
 		//初始化轮播广告
 		initRollText();
+		//初始化特价商品
+		initTeSe();
+		//初始化特价商品
+		initTejia();
 		//初始化列表
 		initList();
-		
 	}
 	
 	//顶部图片轮播
@@ -171,6 +177,19 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
+	}
+	
+	//特色商品
+	private void initTeSe(){
+		grid_tese = headerView.findViewById(R.id.grid_tese);
+		adapter_tese = new TeSeAdapter(getContext());
+		grid_tese.setAdapter(adapter_tese);
+	}
+	//特价商品
+	private void initTejia(){
+		grid_tejia = headerView.findViewById(R.id.grid_tejia);
+		adapter_tejia = new TeJiaAdapter(getContext());
+		grid_tejia.setAdapter(adapter_tejia);
 	}
 	
 	//商品列表

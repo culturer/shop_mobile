@@ -24,6 +24,9 @@
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:background="@color/green"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/navigation"
+        app:itemBackground="@color/black"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"/>
 
 </LinearLayout>

@@ -6,15 +6,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-/**
- * 项目名:    leshu3
- * 包  名:    com.o1.leshu.common.myutil
- * 文件名:    CustomGridView
- * 时  间:    2018/4/13 0013 on 下午 4:31
- * 描  述:    TODO
- *
- * @author: student
- */
 public class CustomGridView extends GridView {
 
     public CustomGridView(Context context) {

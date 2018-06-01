@@ -2,6 +2,7 @@ package com.culturer.shop.base;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,6 +10,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.culturer.shop.R;
 import com.culturer.shop.pages.car.CarFragment;
@@ -32,7 +35,7 @@ public class MainActivity extends BaseActivity {
 			Manifest.permission.ACCESS_FINE_LOCATION,
 			Manifest.permission.WRITE_EXTERNAL_STORAGE,
 			Manifest.permission.READ_EXTERNAL_STORAGE,
-			Manifest.permission.READ_PHONE_STATE
+			Manifest.permission.READ_PHONE_STATE,
 	};
 	
 	private static final int PERMISSON_REQUESTCODE = 0;
@@ -97,6 +100,15 @@ public class MainActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		checkPermissions(needPermissions);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			Window window = getWindow();
+
+//设置修改状态栏
+			window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+//设置状态栏的颜色，和你的app主题或者标题栏颜色设置一致就ok了
+			window.setStatusBarColor(getColor(R.color.black));
+		}
 		super.init();
 		
 	}

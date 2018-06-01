@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/grey1"
     android:orientation="vertical">
 
+    <!--顶部轮播-->
     <com.youth.banner.Banner
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="231dp"
         app:indicator_margin="10dp" />
-
-
+    <!--菜单栏-->
     <com.culturer.shop.wedgit.GrideView.CustomGridView
         android:id="@+id/hfh_gridview"
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
         android:numColumns="5"
         android:paddingBottom="10dp"
         android:paddingTop="10dp" />
-
+    <!--滚动广告-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="43dp"
@@ -53,8 +54,139 @@
             android:layout_gravity="left|center"
             android:layout_weight="1"
             android:textAlignment="center" />
-
     </LinearLayout>
 
+    <!--第一张分割图-->
+    <ImageView
+        android:src="@mipmap/pic_divider1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--特色商品分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1dp"
+            android:background="#747272" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_home_hot_goods" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="特色商品" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1dp"
+            android:background="#747272" />
+    </LinearLayout>
+
+    <com.culturer.shop.wedgit.GrideView.CustomGridView
+        android:id="@+id/grid_tese"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:padding="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--第二张分割图-->
+    <ImageView
+        android:src="@mipmap/pic_divider2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--热门商品分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1dp"
+            android:background="#747272" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_home_hot_goods" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="特价商品" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1dp"
+            android:background="#747272" />
+    </LinearLayout>
+
+    <com.culturer.shop.wedgit.GrideView.CustomGridView
+        android:id="@+id/grid_tejia"
+        android:numColumns="3"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:padding="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--第三张分割图-->
+    <ImageView
+        android:src="@mipmap/pic_divider2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--限时抢购分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1dp"
+            android:background="#747272" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_home_hot_goods" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="限时抢购" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1dp"
+            android:background="#747272" />
+    </LinearLayout>
 
 </LinearLayout>
