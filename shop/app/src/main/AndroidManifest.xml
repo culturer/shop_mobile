@@ -31,10 +31,10 @@
     <uses-permission android:name="android.permission.WRITE_SMS" />
 
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".base.BaseApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -44,8 +44,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="f219a4bff93a2edd77f110023e06a50e" />
 
-        <!--定位服务-->
-        <service android:name="com.amap.api.location.APSService"/>
+        <!-- 定位服务 -->
+        <service android:name="com.amap.api.location.APSService" />
 
         <activity
             android:name=".base.MainActivity"
@@ -56,9 +56,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".detail.DetailActivity">
-
-        </activity>
+        <activity android:name=".detail.DetailActivity"></activity>
+        <activity android:name=".pages.commit.CommitActivity"></activity>
     </application>
 
 </manifest>

@@ -123,30 +123,30 @@ public class MapFragment extends Fragment implements LocationSource, AMapLocatio
 	}
 	
 	private void addMaker(){
-		//添加标记
-		LatLng latLng = new LatLng(39.906901,116.397972);
-		final Marker marker1 = aMap.addMarker(new MarkerOptions().position(latLng).title("北京").snippet("DefaultMarker"));
+//		//添加标记
+//		LatLng latLng = new LatLng(39.906901,116.397972);
+//		final Marker marker1 = aMap.addMarker(new MarkerOptions().position(latLng).title("北京").snippet("DefaultMarker"));
 		
-		//自定义标记
-		MarkerOptions markerOption = new MarkerOptions();
-		markerOption.position(latLng);
-		markerOption.title("西安市").snippet("西安市：34.341568, 108.940174");
-		markerOption.draggable(true);//设置Marker可拖动
-		markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-				.decodeResource(getResources(),R.drawable.ic_add_shopping_cart_black_24dp)));
-		// 将Marker设置为贴地显示，可以双指下拉地图查看效果
-		markerOption.setFlat(true);//设置marker平贴地图效果
-		final Marker marker2 = aMap.addMarker(markerOption);
+//		//自定义标记
+//		MarkerOptions markerOption = new MarkerOptions();
+//		markerOption.position(latLng);
+//		markerOption.title("西安市").snippet("西安市：34.341568, 108.940174");
+//		markerOption.draggable(true);//设置Marker可拖动
+//		markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+//				.decodeResource(getResources(),R.drawable.ic_add_shopping_cart_black_24dp)));
+//		// 将Marker设置为贴地显示，可以双指下拉地图查看效果
+//		markerOption.setFlat(true);//设置marker平贴地图效果
+//		final Marker marker2 = aMap.addMarker(markerOption);
 		
-		//动画
-		Animation animation = new RotateAnimation(marker2.getRotateAngle(),marker2.getRotateAngle()+180,0,0,0);
-		long duration = 1000L;
-		animation.setDuration(duration);
-		animation.setInterpolator(new LinearInterpolator());
-		
-		marker2.setAnimation(animation);
-		marker2.startAnimation();
-		
+//		//动画
+//		Animation animation = new RotateAnimation(marker2.getRotateAngle(),marker2.getRotateAngle()+180,0,0,0);
+//		long duration = 1000L;
+//		animation.setDuration(duration);
+//		animation.setInterpolator(new LinearInterpolator());
+//
+//		marker2.setAnimation(animation);
+//		marker2.startAnimation();
+//
 	}
 	
 	@Override
