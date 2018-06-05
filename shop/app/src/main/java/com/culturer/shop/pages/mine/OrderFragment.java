@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import com.culturer.shop.R;
 
@@ -20,6 +19,7 @@ public class OrderFragment extends Fragment {
 	
 	private View contentView;
 	private ExpandableListView listView;
+	private OrderAdapter adapter;
 	
 	public OrderFragment() {
 		// Required empty public constructor
@@ -48,11 +48,11 @@ public class OrderFragment extends Fragment {
 		
 		if (contentView == null){
 			contentView = inflater.inflate(R.layout.fragment_order, container, false);
+			init();
 		}
 		ViewGroup parent = (ViewGroup) contentView.getParent();
 		if ( parent!=null ){
 			parent.removeView(contentView);
-			init();
 		}
 		return contentView;
 		
@@ -77,6 +77,9 @@ public class OrderFragment extends Fragment {
 	}
 	
 	private void initListView(){
-	
+		adapter = new OrderAdapter(getContext());
+		View headerView = LayoutInflater.from(getContext()).inflate(R.layout.order_header, null);
+		listView.addHeaderView(headerView);
+		listView.setAdapter(adapter);
 	}
 }
