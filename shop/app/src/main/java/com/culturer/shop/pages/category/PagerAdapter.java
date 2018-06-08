@@ -4,6 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.culturer.shop.bean.ProductTypesBean;
+import com.culturer.shop.util.Code;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,32 +16,41 @@ import java.util.List;
  */
 
 public class PagerAdapter extends FragmentPagerAdapter {
-    private List<Fragment> fragments;
-    private List<String> tabs;
+    private List<ProductTypesBean> productTypesBeans;
+    //标签
+    List<String> pagerList = new ArrayList<>();
+    //内容
+    List<Fragment> fragmentList= new ArrayList<>();
 
-    public PagerAdapter(FragmentManager fm, List fragments, List tabs) {
+    public PagerAdapter(FragmentManager fm,List<Fragment> fragmentList,List<ProductTypesBean> productsTypes) {
         super(fm);
-        this.fragments = fragments;
-        this.tabs = tabs;
+        this.fragmentList = fragmentList;
+        this.productTypesBeans = productsTypes;
     }
 
     @Override
     public int getCount() {
-        return tabs.size();
+        return productTypesBeans.size();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return fragmentList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position%fragments.size();
+        return position;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabs.get(position);
+        String name = "" ;
+        try {
+            name = Code.decode(productTypesBeans.get(position).getTypeName());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 }

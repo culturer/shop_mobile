@@ -2,10 +2,10 @@ package com.culturer.shop.pages.commit;
 
 import android.app.AlertDialog;
 import android.os.Build;
-import android.support.constraint.solver.Cache;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -16,11 +16,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.culturer.shop.R;
+import com.culturer.shop.bean.OrderBean;
+import com.culturer.shop.util.Cache;
+import com.culturer.shop.util.Code;
+import com.culturer.shop.util.PreferenceUtil;
+import com.culturer.shop.util.TimeUtil;
+import com.culturer.shop.wedgit.PayPopWindow;
+import com.google.gson.Gson;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.client.HttpParams;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class CommitActivity extends AppCompatActivity {
+import static com.culturer.shop.util.URL.HOST;
+
+public class CommitActivity extends AppCompatActivity implements PayPopWindow.Callback {
 	
 	private static final String TAG = "CommitOrderActivity";
 	
@@ -67,6 +80,7 @@ public class CommitActivity extends AppCompatActivity {
 	}
 	
 	private void initBaseView(){
+		
 		listView = findViewById(R.id.list);
 		all_price1 = findViewById(R.id.all_price1);
 		submit = findViewById(R.id.submit);
@@ -81,25 +95,44 @@ public class CommitActivity extends AppCompatActivity {
 		shop = headerView.findViewById(R.id.shop);
 		ticket = headerView.findViewById(R.id.ticket);
 		msg = headerView.findViewById(R.id.msg);
+		
+		BigDecimal money=new BigDecimal(0).setScale(1, BigDecimal.ROUND_HALF_UP); //期望得到12.4
+		
+		for (int i=0;i< Cache.buys.size();i++){
+			BigDecimal num=new BigDecimal(Cache.buys.get(i).getBuyNum()).setScale(1, BigDecimal.ROUND_HALF_UP); //期望得到12.4
+			BigDecimal price=new BigDecimal(Cache.buys.get(i).getPrice()).setScale(1, BigDecimal.ROUND_HALF_UP); //期望得到12.4
+			money = money.add(price.multiply(num));
+		}
+		
+		all_price1.setText("￥ "+money);
+		
+		submit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				submit(tel.getText().toString(),username.getText().toString(),address.getText().toString(),msg.getText().toString());
+			}
+		});
+		
 	}
 	
 	private void initHeader(){
 	
-//		tel.setText(Cache.user.getUser().getTel());
-//		try {
-//			Log.i(TAG, "initHeader: username"+Code.decode(Cache.user.getUser().getName()));
-//			Log.i(TAG, "initHeader: address"+Code.decode(Cache.user.getPartner().getAddress()));
-//			username.setText(Code.decode(Cache.user.getUser().getName()));
+		tel.setText(Cache.userInfo.getTel());
+		try {
+			if (Cache.userInfo!=null && Cache.userInfo.getName()!=null){
+				Log.i(TAG, "initHeader: username"+ Code.decode(Cache.userInfo.getName()));
+				username.setText(Code.decode(Cache.userInfo.getName()));
 //			address.setText(Code.decode(Cache.user.getPartner().getAddress()));
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-//		order_address.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				changeAddress();
-//			}
-//		});
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		order_address.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				changeAddress();
+			}
+		});
 	}
 	
 	private void changeAddress(){
@@ -127,11 +160,82 @@ public class CommitActivity extends AppCompatActivity {
 				dialog.dismiss();
 			}
 		});
+		
+	}
+	
+	private void submit(String phone,String receiver,String address,String remark){
+	
+		OrderBean orderBean = new OrderBean();
+		orderBean.setStatus(100);
+		orderBean.setTime(TimeUtil.getCurrentTime());
+
+		OrderBean.ConfirmOrderBean.TmpOrderBean tmpOrderBean = new OrderBean.ConfirmOrderBean.TmpOrderBean();
+		tmpOrderBean.setCreateTime(TimeUtil.getCurrentTime());
+		tmpOrderBean.setOrderNum("U"+Cache.userInfo.getId()+"T"+System.currentTimeMillis());
+		tmpOrderBean.setUserId(Cache.userInfo.getId());
+		tmpOrderBean.setPhone(phone);
+		try {
+			tmpOrderBean.setRemark(Code.encode(remark));
+			tmpOrderBean.setReceiver(Code.encode(receiver));
+			tmpOrderBean.setAddress(Code.encode(address));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		OrderBean.ConfirmOrderBean confirmOrderBean = new OrderBean.ConfirmOrderBean();
+		confirmOrderBean.setTmpOrder(tmpOrderBean);
+		confirmOrderBean.setModProducts(Cache.buys);
+		orderBean.setConfirmOrder(confirmOrderBean);
+
+		Gson gson = new Gson();
+		String strProducts = gson.toJson(Cache.buys);
+		String strOrderParam = gson.toJson(tmpOrderBean);
+		conformOrder(strProducts,strOrderParam);
+	
+	}
+	
+	private void conformOrder(String strProducts,String strOrderParam){
+		HttpParams params = new HttpParams();
+		params.put("act","confirmOrder");
+		params.put("orderType",1);
+		params.put("products",strProducts);
+		params.put("orderParam",strOrderParam);
+		params.putHeaders("content-type","application/x-www-form-urlencoded");
+		params.putHeaders("Cookie", PreferenceUtil.getString("sessionId",""));
+		HttpCallback callback = new HttpCallback() {
+			@Override
+			public void onSuccess(String t) {
+				Log.i(TAG, "conformOrder: "+t);
+				PayPopWindow payPopWindow = new PayPopWindow(CommitActivity.this,CommitActivity.this);
+				payPopWindow.showAtLocation(submit, Gravity.BOTTOM,0,0);
+			}
+			
+			@Override
+			public void onFailure(int errorNo, String strMsg) {
+				Log.i(TAG, "提交订单失败: "+strMsg);
+			}
+		};
+		
+		new RxVolley.Builder()
+				.url(HOST+"order")
+				.httpMethod(RxVolley.Method.POST) //default GET or POST/PUT/DELETE/HEAD/OPTIONS/TRACE/PATCH
+				.cacheTime(0) //default: get 5min, post 0min
+				.contentType(RxVolley.ContentType.FORM)//default FORM or JSON
+				.params(params)
+				.shouldCache(false) //default: get true, post false
+				.callback(callback)
+				.encoding("UTF-8") //defaultr
+				.doTask();
 	}
 	
 	private void initList(){
 		listView.addHeaderView(headerView);
 		adapter = new CommitAdapter(this);
 		listView.setAdapter(adapter);
+	}
+	
+	@Override
+	public void callback() {
+	
 	}
 }

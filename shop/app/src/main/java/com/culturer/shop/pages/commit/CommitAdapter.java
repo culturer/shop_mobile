@@ -8,6 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.culturer.shop.R;
+import com.culturer.shop.bean.CarBean;
+import com.culturer.shop.bean.ProductsBean;
+import com.culturer.shop.util.Cache;
+import com.culturer.shop.util.Code;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -19,7 +23,6 @@ import java.util.List;
 public class CommitAdapter extends BaseAdapter{
 	
 	private Context context;
-//	private List<ProductBean.ProductsBean> productsBeans;
 	
 	public CommitAdapter(Context context) {
 		this.context = context;
@@ -27,20 +30,17 @@ public class CommitAdapter extends BaseAdapter{
 	
 	@Override
 	public int getCount() {
-//		if (productsBeans!=null){
-//			return productsBeans.size();
-//		}
-		return 10;
+		return Cache.buys.size();
 	}
 	
 	@Override
-	public Object getItem(int position) {
-		return position;
+	public ProductsBean getItem(int position) {
+		return Cache.buys.get(position);
 	}
 	
 	@Override
 	public long getItemId(int position) {
-		return position;
+		return Cache.buys.get(position).getId();
 	}
 	
 	@Override
@@ -49,14 +49,14 @@ public class CommitAdapter extends BaseAdapter{
 		TextView name = contentView.findViewById(R.id.name);
 		TextView count = contentView.findViewById(R.id.count);
 		TextView price = contentView.findViewById(R.id.price);
-//
-//		try {
-//			name.setText(Code.decode(getItem(position).getName()));
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-//		count.setText("数量: "+getItem(position).getBuyNum());
-//		price.setText("￥ "+getItem(position).getStandardPrice());
+
+		try {
+			name.setText(Code.decode(getItem(position).getName()));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		count.setText("数量: "+getItem(position).getBuyNum());
+		price.setText("￥ "+getItem(position).getPrice());
 		return contentView;
 	}
 }

@@ -8,12 +8,14 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/cover"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_height="60dp" />
 
     <TextView
+        android:id="@+id/name"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="龙虾"
@@ -21,6 +23,7 @@
         android:textColor="@color/black" />
 
     <TextView
+        android:id="@+id/guige"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="500g"
@@ -28,8 +31,12 @@
         android:textColor="@color/grey" />
 
     <TextView
+        android:id="@+id/desc"
+        android:lines="3"
+        android:ellipsize="end"
         android:layout_marginTop="5dp"
         android:text="味道棒棒哒~"
+        android:textSize="8sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -39,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/price"
             android:text="￥20.0/份"
             android:textSize="8sp"
             android:textColor="@color/red"
@@ -47,6 +55,7 @@
             android:layout_gravity="center"
             android:layout_height="wrap_content" />
         <ImageView
+            android:id="@+id/buy"
             android:padding="5dp"
             android:src="@drawable/ic_local_grocery_store_black_24dp"
             android:layout_width="wrap_content"

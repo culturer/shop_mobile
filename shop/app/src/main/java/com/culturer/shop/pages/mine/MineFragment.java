@@ -41,12 +41,12 @@ public class MineFragment extends Fragment {
 		
 		if (contentView == null){
 			contentView  = inflater.inflate(R.layout.fragment_mine, container, false);
-			init();
 		}
 		ViewGroup parent = (ViewGroup) contentView.getParent();
 		if ( parent!=null ){
 			parent.removeView(contentView);
 		}
+		init();
 		return contentView;
 	}
 	
@@ -80,9 +80,9 @@ public class MineFragment extends Fragment {
 		for (int i=0 ;i<pagerList.size() ;i++ ){
 			home_tab.addTab(home_tab.newTab().setText(pagerList.get(i)));
 		}
-		PagerAdapter pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), fragmentList, pagerList);
-		home_pager.setAdapter(pagerAdapter);
-		home_tab.setupWithViewPager(home_pager);
+//		PagerAdapter pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), fragmentList, pagerList);
+//		home_pager.setAdapter(pagerAdapter);
+//		home_tab.setupWithViewPager(home_pager);
 	}
 	
 }
