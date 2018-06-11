@@ -60,6 +60,12 @@ dependencies {
     compile 'com.github.vondear:RxTools:v1.7.8.3'//请替换成上方 JitPack 最新的版本号
     //引入微信支付
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
+
+    ///OSS
+    compile 'com.aliyun.dpa:oss-android-sdk:+'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okio:okio:1.9.0'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
